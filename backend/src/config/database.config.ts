@@ -1,11 +1,6 @@
 ﻿import * as process from "node:process";
+import {ConfigService} from "@nestjs/config";
 
-export const databaseConfig = {
-    uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/your_database_name',
-    options: {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: false
-    }
-};
+export const databaseConfig = (configService: ConfigService) => ({
+    uri: configService.get<string>('MONGODB_URI')
+});

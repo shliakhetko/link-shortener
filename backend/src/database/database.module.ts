@@ -7,10 +7,7 @@ import {databaseConfig} from "../config/database.config";
     imports: [
         MongooseModule.forRootAsync({
             imports: [ConfigModule],
-            useFactory: async () => ({
-                uri: databaseConfig.uri,
-                ...databaseConfig.options,
-            }),
+            useFactory: (configureService: ConfigService) => databaseConfig(configureService),
             inject: [ConfigService],
         })
     ],
