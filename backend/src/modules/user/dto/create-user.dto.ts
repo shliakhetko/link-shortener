@@ -1,4 +1,4 @@
-﻿import {IsEmail, IsNotEmpty, IsString, IsStrongPassword} from "class-validator";
+﻿import {IsEmail, IsMongoId, IsNotEmpty, IsString, IsStrongPassword} from "class-validator";
 
 export class CreateUserDto {
     @IsString()
@@ -10,10 +10,9 @@ export class CreateUserDto {
     email: string;
     
     @IsString()
-    @IsNotEmpty()
-    password: string;
-    
-    @IsString({each: true})
     @IsStrongPassword()
+    password: string;
+
+    @IsMongoId({ each: true })
     links: string[];
 }
