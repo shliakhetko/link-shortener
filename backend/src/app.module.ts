@@ -3,6 +3,7 @@ import {ConfigModule} from "@nestjs/config";
 import {DatabaseModule} from "./database/database.module";
 import {LinkModule} from "./modules/link/link.module";
 import {UserModule} from "./modules/user/user.module";
+import {AuthModule} from "./modules/auth/auth.module";
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import {UserModule} from "./modules/user/user.module";
       }),
       DatabaseModule,
       LinkModule,
-      UserModule
+      UserModule,
+      AuthModule,
   ],
   controllers: [],
   providers: [],
