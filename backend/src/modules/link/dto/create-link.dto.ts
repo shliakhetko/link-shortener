@@ -7,7 +7,4 @@ export class CreateLinkDto {
     
     @IsUrl()
     link: string;
-    
-    @IsString()
-    shortLink: string;
 }
