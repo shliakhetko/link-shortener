@@ -27,6 +27,15 @@ export class UserService {
         return this.userModel.findById(id).exec();
     }
 
+    async findByEmailOrUsername(emailOrUsername: string): Promise<UserDocument | null> {
+        return this.userModel.findOne({
+            $or: [
+                { email: emailOrUsername },
+                { username: emailOrUsername }
+            ]
+        }).exec();
+    }
+
     async update(id: string, updateUserDto: UpdateUserDto) : Promise<UserDocument> {
         if (updateUserDto.password) {
             updateUserDto.password = await hashPassword(updateUserDto.password);
