@@ -24,7 +24,7 @@
 body {
   color: var(--dark-shades);
   background: var(--light-shades);
-  font-family: var(--font-inter);
+  /*font-family: var(--font-inter);*/
 }
 
 @layer utilities {
