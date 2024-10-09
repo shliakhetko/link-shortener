@@ -1,3 +1,3 @@
-﻿import {atomWithStorage} from "jotai/vanilla/utils/atomWithStorage";
+﻿import {atomWithStorage} from "jotai/utils";
 
 export const authAtom = atomWithStorage<string | null>("auth", null);

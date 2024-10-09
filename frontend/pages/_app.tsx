@@ -1,7 +1,10 @@
 import { Layout } from "@/components/layout/Layout";
 import type { AppProps } from 'next/app';
 import Head from "next/head";
+import { Inter } from '@next/font/google';
 import "../styles/globals.css";
+
+const inter = Inter({ subsets: ['latin'] });
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -9,13 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Head>
                 <title>My Application</title>
                 <meta name="description" content="This is my application description." />
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-                    rel="stylesheet"
-                />
                 
             </Head>
-            <Layout>
+            <Layout className={inter.className}>
                 <Component {...pageProps} />
             </Layout>
         </>
