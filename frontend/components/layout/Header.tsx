@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { User } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useLogout } from '@/hooks/useLogout';
+import classNames from "classnames";
 
 export default function Header() {
     const auth = useAuth();
@@ -11,12 +12,12 @@ export default function Header() {
     return (
         <header className="bg-transparent py-4 px-6">
             <nav>
-                <div className="max-w-3xl mx-auto flex justify-between items-center">
+                <div className="max-w-3xl mx-auto flex justify-between items-center sm:flex-row flex-col">
                     <Link href="/" className="text-dark-shades text-xl font-bold">
                         LinkShortener
                     </Link>
 
-                    <div className="flex space-x-4 items-center mt-1" style={{ minHeight: '40px' }}>
+                    <div className={classNames("flex space-x-4 items-center mt-1", !auth.data && "pr-2")} style={{ minHeight: '40px' }}>
                         {auth.loading ? (
                             <span>Loading...</span>
                         ) : auth.data ? (

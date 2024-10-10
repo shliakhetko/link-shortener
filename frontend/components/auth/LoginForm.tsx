@@ -1,6 +1,7 @@
 ﻿"use client";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {useLogin} from "@/hooks/useLogin";
+import classNames from "classnames";
 
 interface LoginFormData {
     username: string;
@@ -66,7 +67,7 @@ export function LoginForm() {
                            placeholder="Password"/>
                     <button
                         type="submit"
-                        className="w-full px-4 py-2 font-bold bg-dark-accent text-light-shades hover:bg-dark-shades transition-colors rounded-lg border border-dark-accent focus:outline-main-brand-color"
+                        className={classNames("w-full px-4 py-2 font-bold bg-dark-accent text-light-shades transition-colors rounded-lg border border-dark-accent focus:outline-main-brand-color hover:bg-dark-shades",  loading ? "opacity-50 cursor-not-allowed" : "")}
                         disabled={loading}
                     >
                         {loading ? "Loading..." : "Login"}
