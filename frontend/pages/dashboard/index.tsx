@@ -1,10 +1,11 @@
 ﻿"use client";
 import {useAuth} from "@/hooks/useAuth";
-import Loading from "@/pages/dashboard/loading";
+import DashboardSkeleton from "@/pages/dashboard/DashboardSkeleton";
 import {useRouter} from "next/router";
-import {useEffect} from "react";
+import {Suspense, useEffect} from "react";
+import Dashboard from "@/pages/dashboard/Dashboard";
 
-export default function Dashboard() {
+export default function DashboardPage() {
     const auth = useAuth();
     const router = useRouter();
 
@@ -15,12 +16,15 @@ export default function Dashboard() {
     }, [auth, router]);
     
     if (auth.loading) {
-        return <Loading />;
+        return <DashboardSkeleton />;
     }
     
     return (
-        <div className="flex-grow">
-            <h1>Dashboard</h1>
+        <div>
+            <h1 className="text-3xl font-bold text-dark-shades mb-6">Your Links</h1>
+            <Suspense fallback={<DashboardSkeleton/>}>
+                <Dashboard />
+        </Suspense>
         </div>
     );
 }

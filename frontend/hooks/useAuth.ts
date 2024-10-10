@@ -19,6 +19,7 @@ export const useAuth = () => {
 
     useEffect(() => {
         const checkToken = async () => {
+            setLoading(true);
             if (auth) {
                 try {
                     const res = await axiosInstance.post('/auth/profile', {
@@ -35,8 +36,13 @@ export const useAuth = () => {
                     }
                 } catch (error) {
                     setAuth(null);
+                    setAuthData(null);
                     setError('Failed to fetch profile');
-                }}
+                }
+            }
+            else{
+                setAuthData(null);
+            }
             setLoading(false);
         };
 

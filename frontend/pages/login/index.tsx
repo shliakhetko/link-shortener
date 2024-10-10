@@ -1,8 +1,20 @@
 ﻿import {LoginForm} from "@/components/auth/LoginForm";
+import {useAuth} from "@/hooks/useAuth";
+import {useRouter} from "next/router";
+import {useEffect} from "react";
 
 export default function Login() {
+    const auth = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (auth.data) {
+            router.push('/dashboard');
+        }
+    }, [auth, router]);
+    
 return (
-    <div className="flex-grow flex items-center justify-center pb-32">
+    <div className="flex-grow flex items-center justify-center">
     <div
         className="flex flex-col items-center justify-center min-w-72 w-0 bg-main-brand-color rounded-xl space-y-4">
         <div className="flex flex-col items-center justify-center space-y-2 w-full pt-3">
