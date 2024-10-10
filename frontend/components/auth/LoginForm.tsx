@@ -15,6 +15,7 @@ const emptyFormData: LoginFormData = {username: "", password: ""};
 export function LoginForm() {
     const [formData, setFormData] = useState<LoginFormData>(emptyFormData);
     const [errors, setErrors] = useState<Partial<LoginFormErrors>>({});
+    const [loading, setLoading] = useState(false);
     const login = useLogin();
     
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +23,7 @@ export function LoginForm() {
     }
     
     const validateForm = ():boolean => {
-        let tempErrors: Partial<LoginFormData> = {};
+        const tempErrors: Partial<LoginFormData> = {};
         if(formData.username === ""){
             tempErrors.username = "Email or username is required";
         }
@@ -36,13 +37,18 @@ export function LoginForm() {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (validateForm()) {
+            setLoading(true);
+            setTimeout(() => {
             login(formData)
                 .then(() => {
                     setFormData(emptyFormData);
+                    setErrors({});
+                    setLoading(false);
                 })
                 .catch(() => {
                     setErrors({ notFound: "Invalid username or password" });
-                });
+                    setLoading(false);
+                });}, 1000);
         }
     };
     return (
@@ -61,11 +67,14 @@ export function LoginForm() {
                     <button
                         type="submit"
                         className="w-full px-4 py-2 font-bold bg-dark-accent text-light-shades hover:bg-dark-shades transition-colors rounded-lg border border-dark-accent focus:outline-main-brand-color"
+                        disabled={loading}
                     >
-                        Login 
+                        {loading ? "Loading..." : "Login"}
                     </button>
-                    {Object.values(errors)[0] && <p className="text-xs text-center text-red-500">{Object.values(errors)[0]}</p>}
-                </div>
+                    
+                    {Object.values(errors)[0] && <div className="bg-light-shades p-0.5 rounded-md border-2 border-red-500"><p
+                        className="text-xs text-center text-red-500">{Object.values(errors)[0]}</p></div>}
+                    </div>
             </form>
     )
 }

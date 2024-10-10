@@ -1,13 +1,21 @@
 ﻿import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { authAtom } from '@/atoms/authAtom';
 import useAxios from "@/utils/api";
 
+interface AuthData {
+    userId: string;
+    username: string;
+}
+
 export const useAuth = () => {
     const [auth, setAuth] = useAtom(authAtom);
+    const [authData, setAuthData] = useState<AuthData | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
     const router = useRouter();
-    const axiosInstance = useAxios()
+    const axiosInstance = useAxios();
 
     useEffect(() => {
         const checkToken = async () => {
@@ -18,21 +26,22 @@ export const useAuth = () => {
                             Authorization: `Bearer ${auth}`,
                         },
                     });
-                    if (res.data.statusCode){
+                    if (res.data.statusCode) {
                         setAuth(null);
-                        console.log('Token invalid');
-                        //Timed out
+                        setError('Failed to fetch profile');
+                    } else {
+                        setAuthData(res.data);
+                        setError(null);
                     }
                 } catch (error) {
                     setAuth(null);
-                    console.error('Error checking token:', error);
-                    //Something vent wrong
-                }
-            }
+                    setError('Failed to fetch profile');
+                }}
+            setLoading(false);
         };
 
         checkToken();
     }, [auth, router, setAuth]);
 
-    return auth;
+    return { data: authData, loading, error };
 };

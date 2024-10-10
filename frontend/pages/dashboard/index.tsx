@@ -1,16 +1,26 @@
 ﻿"use client";
 import {useAuth} from "@/hooks/useAuth";
+import Loading from "@/pages/dashboard/loading";
+import {useRouter} from "next/router";
+import {useEffect} from "react";
 
 export default function Dashboard() {
     const auth = useAuth();
+    const router = useRouter();
 
-    if (!auth) {
-        return <h1>You have no rights</h1>; // Optionally render a loading state or null
+    useEffect( () => {
+        if (auth.error) {
+            router.push('/login');
+        }
+    }, [auth, router]);
+    
+    if (auth.loading) {
+        return <Loading />;
     }
     
     return (
-        <>
+        <div className="flex-grow">
             <h1>Dashboard</h1>
-        </>
+        </div>
     );
 }
